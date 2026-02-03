@@ -9,7 +9,7 @@ const showHelp = require('./commands/help');
 const program = new Command();
 
 program
-    .name('devflow')
+    .name('devstream')
     .description('🚀 Developer environment orchestration CLI')
     .version('0.1.0');
 

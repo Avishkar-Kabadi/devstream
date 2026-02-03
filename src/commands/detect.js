@@ -8,9 +8,9 @@ module.exports = function detect() {
   console.log(chalk.blue('🔍 Detecting project...'));
 
   let recommended = {};
-  const devflowConfig = path.join(cwd, 'devflow.json');
-  if (fs.existsSync(devflowConfig)) {
-    recommended = JSON.parse(fs.readFileSync(devflowConfig, 'utf-8'));
+  const devstreamConfig = path.join(cwd, 'devstream.json');
+  if (fs.existsSync(devstreamConfig)) {
+    recommended = JSON.parse(fs.readFileSync(devstreamConfig, 'utf-8'));
   }
 
   const results = {

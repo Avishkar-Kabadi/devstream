@@ -16,7 +16,7 @@ module.exports = async function setup() {
         catch { console.log(chalk.red(`❌ Failed to install ${pm} dependencies`)); }
     }
 
-    const envTemplate = path.join(process.cwd(), 'devflow.env.template.json');
+    const envTemplate = path.join(process.cwd(), 'devstream.env.template.json');
     const envFile = path.join(process.cwd(), '.env');
     if (fs.existsSync(envTemplate)) {
         const template = JSON.parse(fs.readFileSync(envTemplate, 'utf8'));

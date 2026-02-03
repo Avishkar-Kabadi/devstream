@@ -5,27 +5,52 @@ const chalk = require('chalk');
 const inquirer = require('inquirer');
 const detect = require('./detect');
 
-module.exports = async function setup() {
-    console.log(chalk.blue('🚀 Setting up project environment...'));
-    const results = detect();
+const ENV_TEMPLATE = {
+    PORT: '3000',
+    DATABASE_URL: '',
+    JWT_SECRET: '',
+    API_KEY:''
+};
 
-    if (results.stack.includes('node')) {
+module.exports = async function setup() {
+    console.log(chalk.blue('\n🚀 Setting up project environment...\n'));
+
+    const results = detect?.() || { stack: ['node'], packageManager: 'npm' };
+
+    if (results.stack?.includes('node')) {
         const pm = results.packageManager || 'npm';
         console.log(chalk.green(`📦 Installing ${pm} dependencies...`));
-        try { execSync(`${pm} install`, { stdio: 'inherit' }); }
-        catch { console.log(chalk.red(`❌ Failed to install ${pm} dependencies`)); }
+        try {
+            execSync(`${pm} install`, { stdio: 'inherit' });
+        } catch {
+            console.log(chalk.red(`❌ Failed to install ${pm} dependencies`));
+        }
     }
 
-    const envTemplate = path.join(process.cwd(), 'devstream.env.template.json');
-    const envFile = path.join(process.cwd(), '.env');
-    if (fs.existsSync(envTemplate)) {
-        const template = JSON.parse(fs.readFileSync(envTemplate, 'utf8'));
-        const answers = await inquirer.prompt(
-            Object.keys(template).map(key => ({ type: 'input', name: key, message: `Enter value for ${key}:`, default: template[key] || '' }))
-        );
-        fs.writeFileSync(envFile, Object.entries(answers).map(([k, v]) => `${k}=${v}`).join('\n'));
-        console.log(chalk.green('✔ .env created'));
+    const projectRoot = process.cwd();
+    const envPath = path.join(projectRoot, '.env');
+
+    if (fs.existsSync(envPath)) {
+        console.log(chalk.yellow('⚠️  .env already exists. Skipping env setup.\n'));
+        return;
     }
 
+    const answers = await inquirer.prompt(
+        Object.entries(ENV_TEMPLATE).map(([key, defaultValue]) => ({
+            type: 'input',
+            name: key,
+            message: `Enter value for ${key}:`,
+            default: defaultValue
+        }))
+    );
+
+    const envContent = Object.entries(answers)
+        .map(([key, value]) => `${key}=${value}`)
+        .join('\n');
+
+    fs.writeFileSync(envPath, envContent);
+
+    console.log(chalk.green('\n✔ .env created successfully'));
+    console.log(chalk.gray(`📄 Location: ${envPath}\n`));
     console.log(chalk.blue('✅ Setup complete!\n'));
 };

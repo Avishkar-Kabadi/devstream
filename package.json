@@ -1,6 +1,6 @@
 {
   "name": "devstream",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "devstream CLI - Developer environment orchestration tool for Node, React, Python, and more",
   "main": "index.js",
   "type": "commonjs",

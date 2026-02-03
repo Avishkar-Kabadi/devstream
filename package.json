@@ -1,0 +1,35 @@
+{
+  "name": "devflow",
+  "version": "1.0.0",
+  "description": "DevFlow CLI - Developer environment orchestration tool for Node, React, Python, and more",
+  "main": "index.js",
+  "type": "commonjs",
+  "bin": {
+    "devflow": "./src/index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "devflow",
+    "cli",
+    "developer-tools",
+    "environment",
+    "setup",
+    "check",
+    "node",
+    "react",
+    "python"
+  ],
+  "author": "Your Name <your.email@example.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/devflow.git"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^14.0.3",
+    "inquirer": "^8.2.7"
+  }
+}
